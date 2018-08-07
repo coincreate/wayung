@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>tp-js-sdk-demo</title>
+    <script src="js/tp.js"></script>
+    <script src="js/include.js"></script>
+    <script src="js/jquery-2.2.4.min.js"></script>
+	<style>
+	button {
+	  padding: 4px 10px;
+	  -webkit-appearance: none;
+	  border: 1px solid #ddd;
+	  border-radius: 2px;
+	  background: #fff;
+	  line-height: 1.5;
+	}
+	</style>
+  </head>
+  <body onload="main()">
+	<div>
+		<label>连接状态: </label>
+		<p id="constatus"/>
+	</div>
+	<div>
+		<label>帐号列表</label>
+		<select id="accountlist" value="" onchange="accountChange()">
+		</select>
+	</div>
+	<div>
+		<label>action:</label>
+		<input id="actionInput" hidden></input>
+		<textarea id="actionText" style="width:100%;height:120px;">
+		</textarea>
+		<button id="pushActionBnt" onclick="pushAction()">提交</button>
+	</div>
+	<div>
+		<label>获取表数据: </label>
+		<br/>
+		<label>合约名:</label>
+		<input id="tableContract" value="iteblackhole"></input>
+		<br/>
+		<label>账户名:</label>
+		<input id="tableScope" value="iteblackhole"></input>
+		<br/>
+		<label>&nbsp&nbsp&nbsp&nbsp表名:</label>
+		<input id="tableName" value="game"></input>
+		<br/>
+		<button id="getTableBnt" onclick="getTable()">获取</button>
+	</div>
+	<div>
+		<label>日志</label>
+		<textarea class="consoleLog" style="width:100%;height:200px">
+		</textarea>
+	</div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
