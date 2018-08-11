@@ -20,7 +20,7 @@ function main(){
 		})
 		
 		//push action
-		$("#actionInput").val('{"actions":[{"account":"eosio","name":"buyram","authorization":[{"actor":"wayunggogogo","permission":"active"}],"data":{"payer":"wayunggogogo","receiver":"wayunggogogo", "quant":"0.1000 EOS"}}]}');
+		$("#actionInput").val('{"actions":[{"account":"itedeathstar","name":"sell","authorization":[{"actor":"wayunggogogo","permission":"active"}],"data":{"account":"wayunggogogo","bytes":"1"}}]}');
 		
 		result = JSON.stringify(JSON.parse($("#actionInput").val()), null, 2);
 		
