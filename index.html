@@ -9,6 +9,7 @@
 	<title>撸一撸</title>
 	<link rel="shortcut icon" href="favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
     <script src="js/jquery_2.1.0.min.js"></script>
     <script src="js/include.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -16,11 +17,13 @@
 	<style type="text/css">  
             body{background-size:cover;font-size: 16px;}  
             .form{background: rgba(255,255,255,0.2);width:400px;margin:50px auto;}
+			.fa{display: inline-block;top: 6px;left: 5px;position: relative;color: #63B8FF;}
             select{text-indent:11px;margin-top: -20px;}
     </style>
 </head>
 <body style="overflow-x:hidden" onload="main()">
 <div style="width:50%;">
+	<i class="fa fa-user fa-lg"></i>
 	<select class="form-control required" id="accounts" onchange="walletchange(this)">
 	</select>
 </div>
