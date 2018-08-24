@@ -9,20 +9,23 @@
 	<title>撸一撸</title>
 	<link rel="shortcut icon" href="favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/font-awesome.min.css" rel="stylesheet">
     <script src="js/jquery_2.1.0.min.js"></script>
     <script src="js/include.js"></script>
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/tp.js"></script>
 </head>
 <body onload="main()">
-<div style="width:200px;">
+<div>
 	<select style="width:200px;" id="accounts" onchange="walletchange(this)">
 	</select>
 </div>
 <div style="margin:100px auto;text-align:center;vertical-align:middle;">
-	<input style="width:200px;" id="upplayer" placeholder="输入将获取奖励的账号"></input>
-	<button style="width:200px;margin:50px auto;"  onclick="pusheosshishicaiaddlink()">点我撸0.1EOS</button>
+	<div>
+	<input style="width:150px;" id="upplayer" placeholder="输入将获取奖励的账号"></input>
+	</div>
+	<div>
+	<button style="width:150px;margin:50px auto;"  onclick="pusheosshishicaiaddlink()">点我撸0.1EOS</button>
+	</div>
 </div>
 </body>
 </html>
