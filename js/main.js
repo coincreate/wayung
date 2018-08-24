@@ -1,101 +1,55 @@
+var g_currenwalletname = '';
 function main(){
-    console.log("enter main");
-	var result = null;
-    if(tp.isConnected() == true)
+	if(tp.isConnected() == true)
 	{
-		$("#constatus").text("已连接").css('color', 'green');
-		
 		tp.getWalletList('eos').then(data => {
-		var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
-        $('.consoleLog').html(result);
 		var accountCnt = data["wallets"]["eos"].length;
-		var $accountList = $("#accountlist");
+		var $accountList = $("#accounts");
 		$accountList.empty();
 		for(var i=0;i<=accountCnt;i++)
 		{	
 			var accountName = data["wallets"]["eos"][i]["name"];
-			var accountEosBalance = data["wallets"]["eos"][i]["tokens"]["EOS"];
-			$accountList.append(new Option(accountName+" "+accountEosBalance+" EOS",accountName));
+			$accountList.append(new Option(accountName,accountName));
+			if(i == 0)
+			{
+				g_currenwalletname = accountName;
+			}
 		}
 		})
-		
-		//push action
-		$("#actionInput").val('{"actions":[{"account":"eosio","name":"buyram","authorization":[{"actor":"wayunggogogo","permission":"active"}],"data":{"payer":"wayunggogogo","receiver":"wayunggogogo", "quant":"0.1000 EOS"}}]}');
-		
-		result = JSON.stringify(JSON.parse($("#actionInput").val()), null, 2);
-		
-		$("#actionText").html(result);
+	}
+	else{
+		console.log("tp is not connected!");
+	}
+}
+
+function walletchange(obj)
+{
+	g_currenwalletname = $(obj).val();
+}
+
+function pusheosshishicaiaddlink()
+{
+	if(tp.isConnected() == true)
+	{
+		try {
+			var curaccount = g_currenwalletname;
+			var upplayer = $("#upplayer").val();
+			var actionstr = '{"actions":[{"account":"eosshishicai","name":"addlink","authorization":[{"actor":"'+curaccount+'","permission":"active"}],"data":{"player":"'+curaccount+'","upplayer": "'+upplayer+'"}}]}';
+			var params = JSON.parse(actionstr);
+			tp.pushEosAction(params).then(data => {
+			  //var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
+			  //$('.consoleLog').html(result);
+			  getaccountinfo(curaccount);
+			});
+			
+		}
+		catch(e) {
+        //$('.consoleLog').html(e);
+		}
 	}
 	else
 	{
-		$("#constatus").text("请在TP钱包开发者模式下打开此网页").css('color', 'red')
+		console.log("tp is not connected!");
+		
 	}
-}
-
-function transfer()
-{
-	if(tp.isConnected() == true)
-	{
-	tp.eosTokenTransfer({
-    from: 'wayunggogogo',
-    to: 'wayungmihoko',
-    amount: '0.0001',
-    tokenName: 'EOS',
-    precision: 4,
-    contract: 'eosio.token',
-    memo: 'test'
-	});
-	}
-}
-
-function accountChange()
-{
-	if(tp.isConnected() == true)
-	{
-	try {
-	tp.getEosBalance({
-    account: $("#accountlist").val(),
-    contract: 'eosio.token',
-    symbol: 'EOS'
-	}).then(data => {
-		var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
-        $('.consoleLog').html(result);
-		$("#balanceval").text(data["data"]["balance"]);
-      })
-	}
-	catch(e) {
-		$('.consoleLog').html(e);
-      }
-	}
-}
-
-function pushAction()
-{
-	try {
-        var params = JSON.parse($("#actionText").val());
-        tp.pushEosAction(params).then(data => {
-          var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
-          $('.consoleLog').html(result);
-        })
-      }
-      catch(e) {
-        $('.consoleLog').html(e);
-      }
-	
-}
-
-function getTable()
-{
-	try {
-        var str = '{"json": true, "code": "'+ $("#tableContract").val() + '", "scope": "' + $("#tableScope").val() + '","table": "' + $("#tableName").val() + '","limit": 30}';
-		var params = JSON.parse(str);
-        tp.getTableRows(params).then(data => {
-		  var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
-          $('.consoleLog').html(result);
-        })
-      }
-      catch(e) {
-        $('.consoleLog').html(e);
-      }
-	
 }
