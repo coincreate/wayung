@@ -39,7 +39,6 @@ function pusheosshishicaiaddlink()
 			tp.pushEosAction(params).then(data => {
 			  //var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
 			  //$('.consoleLog').html(result);
-			  getaccountinfo(curaccount);
 			});
 			
 		}
