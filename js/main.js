@@ -88,6 +88,7 @@ function GetAbi()
 	if(error == null)
 	{
 		console.log(JSON.stringify(data, null, 2));
+		$contractid.val(data["abi"]["tables"][0]["name"]);
 		var tablecnt = data["abi"]["tables"].length;
 		for(var i = 0; i < tablecnt; i++)
 		{
