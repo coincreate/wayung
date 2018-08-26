@@ -6,25 +6,32 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scale=no">
-	<title>撸一撸</title>
+	<title>合约交互工具</title>
 	<link rel="shortcut icon" href="favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/jquery_2.1.0.min.js"></script>
     <script src="js/include.js"></script>
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/tp.js"></script>
+	<script src="js/eos.min.js"></script>
 </head>
-<body onload="main()">
+<body onload="Main()">
 <div>
-	<select style="width:200px;" id="accounts" onchange="walletchange(this)">
+	<select style="width:200px;" id="accountlistid" onchange="WalletChange(this)">
 	</select>
 </div>
 <div style="margin:100px auto;text-align:center;vertical-align:middle;">
-	<div>
-	<input style="width:200px;" id="upplayer" placeholder="输入将获取奖励的账号"></input>
+    <div>
+	<input style="width:200px;" id="contractid" placeholder="请输入合约名" onchange="GetAbi()"></input>
 	</div>
 	<div>
-	<button style="width:200px;margin:50px auto;"  onclick="pusheosshishicaiaddlink()">点我撸0.1EOS</button>
+	<select style="width:200px;" id="tablelistid" onchange="TableChange(this)"></select>
+	</div>
+	<div>
+	<select style="width:200px;" id="actionlistid" onchange="ActionChange(this)"></select>
+	</div>
+	<div>
+	<button style="width:200px;margin:50px auto;">提交</button>
 	</div>
 </div>
 </body>
