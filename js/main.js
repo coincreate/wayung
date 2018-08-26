@@ -104,8 +104,8 @@ function GetAbi()
 	}
 	else
 	{
-		$("#logid").html(err);
-		console.log(err);
+		$("#logid").html(error);
+		console.log(error);
 		$tablelistid.empty();
 		$actionlistid.empty();
 		
