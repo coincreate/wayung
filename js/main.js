@@ -88,17 +88,17 @@ function GetAbi()
 	if(error == null)
 	{
 		console.log(JSON.stringify(data, null, 2));
-		var tablecnt = data["tables"].length;
+		var tablecnt = data["abi"]["tables"].length;
 		for(var i = 0; i < tablecnt; i++)
 		{
-			var tablename = data["tables"][i]["name"];
+			var tablename = data["abi"]["tables"][i]["name"];
 			$tablelistid.append(new Option(tablename,tablename));
 		}
 		
-		var actioncnt = data["actions"].length;
+		var actioncnt = data["abi"]["actions"].length;
 		for(var i = 0; i < actioncnt; i++)
 		{
-			var actionname = data["actions"][i]["name"];
+			var actionname = data["abi"]["actions"][i]["name"];
 			$actionlistid.append(new Option(actionname,actionname));
 		}
 	}
