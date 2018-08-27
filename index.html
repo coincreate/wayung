@@ -20,23 +20,72 @@
 	<select style="width:200px;" id="accountlistid" onchange="WalletChange(this)">
 	</select>
 </div>
-<div style="margin:100px auto;text-align:center;vertical-align:middle;">
+<!--div style="margin:100px auto;text-align:center;vertical-align:middle;">
+	<div>
+		<label>接入节点</label>
+		<input style="width:200px;" id="httpendpointid" onchange="HttpEndPointChange(this)"></input>
+	</div>
     <div>
-	<input style="width:200px;" id="contractid" placeholder="请输入合约名" onchange="GetAbi()"></input>
+		<label>合约</label>
+		<input style="width:200px;" id="contractid" placeholder="请输入合约名" onchange="GetAbi()"></input>
 	</div>
 	<div>
-	<select style="width:200px;" id="tablelistid" onchange="TableChange(this)"></select>
+		<label>操作</label>
+		<select style="width:200px;" id="opratetypeid" onchange="OprateChange(this)"></select>
+	</div>
+	<div id="tableid" hidden>
+		<div>
+			<label>table</label>
+			<select style="width:200px;" id="tablelistid" onchange="TableChange(this)"></select>
+		</div>
+		<div>
+			<label>scope</label>
+			<input style="width:200px;" id="contractid"></input>
+		</div>
+	</div>
+	<div id="actionid" hidden>
+		<div>
+			<label>action</label>
+			<select style="width:200px;" id="actionlistid" onchange="ActionChange(this)"></select>
+		</div>
+		<div id="actionparamid">
+		</div>
 	</div>
 	<div>
-	<select style="width:200px;" id="actionlistid" onchange="ActionChange(this)"></select>
+		<button style="width:200px;margin:50px auto;">提交</button>
 	</div>
 	<div>
-	<button style="width:200px;margin:50px auto;">提交1</button>
+		<textarea style="width:100%;height:1000px;" id="logid">
+		</textarea>
 	</div>
-	<div>
-	<textarea style="width:100%;height:200px" id="logid">
-	</textarea>
-	</div>
+</div-->
+<div style="margin:100px auto;vertical-align:middle;">
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="httpendpointid" class="col-xs-offset-1 col-xs-4 col-sm-offset-0 col-sm-4 control-label">接入节点</label>
+    <div class="col-xs-6 col-sm-5">
+      <input class="form-control" id="httpendpointid" onchange="HttpEndPointChange(this)"></input>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="contractid" class="col-xs-offset-1 col-xs-4 col-sm-offset-0 col-sm-4 control-label">合约</label>
+    <div class="col-xs-6 col-sm-5">
+      <input class="form-control" id="contractid" placeholder="请输入合约名" onchange="GetAbi()"></input>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="opratetypeid" class="col-xs-offset-1 col-xs-4 col-sm-offset-0 col-sm-4 control-label">操作</label>
+    <div class="col-xs-6 col-sm-5">
+      <select class="form-control" id="opratetypeid" onchange="OprateChange(this)"></select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-xs-offset-5 col-sm-offset-4 col-sm-7">
+      <button type="submit" class="btn btn-default">提交</button>
+    </div>
+  </div>
+</form>
 </div>
 </body>
 </html>

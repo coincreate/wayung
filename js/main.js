@@ -2,9 +2,14 @@ var g_curwalletname = '';
 var g_curtable = '';
 var g_curaction = '';
 var g_eos = '';
+var g_abidata = '';
 function Main(){
-	EosjsInit();
 	
+	var $httpendpointid = $("#httpendpointid");
+	$httpendpointid.val("https://mainnet.eoscannon.io");
+	
+	EosjsInit();
+
 	if(tp.isConnected() == true)
 	{
 		tp.getWalletList('eos').then(data => {
@@ -42,6 +47,26 @@ function ActionChange(obj)
 	g_curaction = $(obj).val();
 }
 
+function HttpEndPointChange(obj)
+{
+	EosjsInit();
+}
+
+function OprateChange(obj)
+{
+	if($(obj).val() == 0)
+	{
+		$("#tableid").show();
+		$("#actionid").hide();
+	}
+	else if($(obj).val() == 1)
+	{
+		$("#tableid").hide();
+		$("#actionid").show();
+	}
+		
+}
+
 function pusheosshishicaiaddlink()
 {
 	if(tp.isConnected() == true)
@@ -72,7 +97,7 @@ function EosjsInit()
 {
     var eosConfig = {
       chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-      httpEndpoint: 'https://api.eosnewyork.io',
+      httpEndpoint: $("#httpendpointid").val(),
       verbose: true
     }
 	
@@ -87,6 +112,7 @@ function GetAbi()
 	g_eos.getAbi($contractid.val(), function(error, data) {
 	if(error == null)
 	{
+		g_abidata = data;
 		console.log(JSON.stringify(data, null, 2));
 		var tablecnt = data["abi"]["tables"].length;
 		for(var i = 0; i < tablecnt; i++)
@@ -101,6 +127,10 @@ function GetAbi()
 			var actionname = data["abi"]["actions"][i]["name"];
 			$actionlistid.append(new Option(actionname,actionname));
 		}
+		
+		$("#opratetypeid").empty();
+		$("#opratetypeid").append(new Option("gettable",0));
+		$("#opratetypeid").append(new Option("pushaction",1));
 	}
 	else
 	{
