@@ -4,12 +4,13 @@ var g_curaction = '';
 var g_eos = '';
 var g_abidata = '';
 function Main(){
-	
+	$("#tableid").hide();
+	$("#actionid").hide();
 	var $httpendpointid = $("#httpendpointid");
 	$httpendpointid.val("https://mainnet.eoscannon.io");
-	
-	EosjsInit();
 
+	EosjsInit();
+		
 	if(tp.isConnected() == true)
 	{
 		tp.getWalletList('eos').then(data => {
@@ -44,7 +45,41 @@ function TableChange(obj)
 
 function ActionChange(obj)
 {
-	g_curaction = $(obj).val();
+	var type = $(obj).val();
+	ActionParamParse(type);
+}
+
+function ActionParamParse(action)
+{
+	var action_type;
+	var actioncnt = g_abidata["abi"]["actions"].length;
+	for(var i = 0; i < actioncnt; i++)
+	{
+		if(g_abidata["abi"]["actions"][i]["name"] == action)
+		{
+			action_type = g_abidata["abi"]["actions"][i]["type"];
+			break;
+		}
+	}
+	
+	var fields;
+	var structcnt = g_abidata["abi"]["structs"].length;
+	for(var i = 0; i < structcnt; i++)
+	{
+		if(g_abidata["abi"]["structs"][i]["name"] == action_type)
+		{
+			fields = g_abidata["abi"]["structs"][i]["fields"];
+			break;
+		}
+	}
+	
+	$("#actionparamlistid").empty();
+	var fieldcnt = fields.length;
+	for(var i = 0; i < fieldcnt; i++)
+	{
+		var paramdiv = "<div class='row justify-content-center' style='margin:20px auto;'><div class='col-3'><label class='text-right'>"+fields[i]["name"]+"</label></div><div class='col-8'><input placeholder='"+fields[i]["type"]+"'></input></div></div>";
+		$("#actionparamlistid").append(paramdiv);
+	}
 }
 
 function HttpEndPointChange(obj)
@@ -52,19 +87,72 @@ function HttpEndPointChange(obj)
 	EosjsInit();
 }
 
-function OprateChange(obj)
+function OperateShow(type)
 {
-	if($(obj).val() == 0)
-	{
-		$("#tableid").show();
-		$("#actionid").hide();
-	}
-	else if($(obj).val() == 1)
+	if(type == 0)
 	{
 		$("#tableid").hide();
 		$("#actionid").show();
 	}
-		
+	else if(type == 1)
+	{
+		$("#tableid").show();
+		$("#actionid").hide();
+	}
+}
+
+function OperateChange(obj)
+{
+	var type = $(obj).val();
+	OperateShow(type);
+}
+
+function OperateSubmit()
+{
+	var contract = $("#contractid").val();
+	var type = $("#operatetypeid").val();
+	if(type == 0)
+	{
+		try {
+			var curaccount = g_curwalletname;
+			var action = $("#actionlistid").val();
+			var paramdata = '';
+			$("#actionparamlistid").find(".row").each(function(){
+				paramname = $(this).find("label").html();
+				paramval = $(this).find("input").val();
+				paramdata += '"'+paramname+'":"'+paramval+'",';
+			});
+			paramdata = paramdata.substring(0,paramdata.length-1)
+			
+			var actionstr = '{"actions":[{"account":"'+contract+'","name":"'+action+'","authorization":[{"actor":"'+curaccount+'","permission":"active"}],"data":{'+paramdata+'}}]}';
+			console.log("actionstr is "+actionstr);
+			var params = JSON.parse(actionstr);
+			tp.pushEosAction(params).then(data => {
+			  var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
+			  $('#logid').html(result);
+			});
+		}
+		catch(e) {
+        $("#logid").html(e);
+		console.log(e);
+		}
+	}
+	else if(type == 1)
+	{
+		var scope = $("#scopeid").val();
+		var table = $("#tablelistid").val();
+		g_eos.getTableRows(true, contract, scope, table, function(error, data){
+			if(error == null)
+			{
+				$("#logid").html(JSON.stringify(data, null, 2));
+			}
+			else
+			{
+				$("#logid").html(error);
+				console.log(error);
+			}
+		})
+	}
 }
 
 function pusheosshishicaiaddlink()
@@ -109,6 +197,10 @@ function GetAbi()
 	var $contractid = $("#contractid");
 	var $tablelistid = $("#tablelistid");
 	var $actionlistid = $("#actionlistid");
+	$tablelistid.empty();
+	$actionlistid.empty();
+	$("#tableid").hide();
+	$("#actionid").hide();
 	g_eos.getAbi($contractid.val(), function(error, data) {
 	if(error == null)
 	{
@@ -128,17 +220,18 @@ function GetAbi()
 			$actionlistid.append(new Option(actionname,actionname));
 		}
 		
-		$("#opratetypeid").empty();
-		$("#opratetypeid").append(new Option("gettable",0));
-		$("#opratetypeid").append(new Option("pushaction",1));
+		$("#operatetypeid").empty();
+		$("#operatetypeid").append(new Option("pushaction",0));
+		$("#operatetypeid").append(new Option("gettable",1));
+		
+		OperateShow($("#operatetypeid").val());
+		
+		ActionParamParse($actionlistid.val());
 	}
 	else
 	{
 		$("#logid").html(error);
 		console.log(error);
-		$tablelistid.empty();
-		$actionlistid.empty();
-		
 	}
 	})
 }
