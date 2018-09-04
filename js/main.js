@@ -60,13 +60,6 @@ function Main(){
         console.error(error);
     });
 	});
-
-	scatter.getIdentity(requiredFields).then(identity => {
-    	console.log(identity);
-	}).catch(error => {
-		console.log(error);
-	    //...
-	})
 		
 	if(tp.isConnected() == true)
 	{
