@@ -10,6 +10,13 @@ function Main(){
 	$httpendpointid.val("https://mainnet.eoscannon.io");
 
 	EosjsInit();
+
+	scatter.connect("ContractCommonTool").then(function(connected){
+    // User does not have Scatter Desktop, Mobile or Classic installed.
+    if(!connected) return false;
+    window.scatter = null;
+    console.log("scatter connect ok");
+});
 		
 	if(tp.isConnected() == true)
 	{
