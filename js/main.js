@@ -13,7 +13,7 @@ function Main(){
 
 	scatter.connect("TestPage").then(function(connected){
         console.log('connected', connected)
-    })catch(function(x){
+    }).catch(function(x){
         console.log('x', x);
     });
 
@@ -37,7 +37,7 @@ function Main(){
 
     var eos = scatter.eos(network, Eos);
 
-    console.log('id before', scatter.identity)
+    console.log('id before', scatter.identity);
     scatter.forgetIdentity().then(function(){
         scatter.getIdentity({accounts:[network]}).then(function(id){
             const account = id.accounts.find(function(x){ return x.blockchain === 'eos' });
