@@ -16,7 +16,14 @@ function Main(){
     if(!connected) return false;
     window.scatter = null;
     console.log("scatter connect ok");
-});
+	});
+
+	scatter.getIdentity(requiredFields).then(identity => {
+    	console.log(identity);
+	}).catch(error => {
+		console.log(error);
+	    //...
+	})
 		
 	if(tp.isConnected() == true)
 	{
