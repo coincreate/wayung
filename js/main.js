@@ -12,12 +12,8 @@ function Main(){
 	EosjsInit();
 
 	scatter.connect("TestPage").then(function(connected){
-        console.log('connected', connected)
-    }).catch(function(x){
-        console.log('x', x);
-    });
-
-    var network = {blockchain:'eos', protocol:'https', host:'mainnet.eoscannon.io', port:443, chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'};
+        console.log('connected', connected);
+        var network = {blockchain:'eos', protocol:'https', host:'mainnet.eoscannon.io', port:443, chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'};
 //        var network = {blockchain:'eos', protocol:'http', host:'192.168.1.6', port:8888, chainId:'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'};
 //
 //        scatter.getPublicKey('eos').then(function(publicKey){
@@ -33,22 +29,24 @@ function Main(){
 //        });
 
 
+	    var eos = scatter.eos(network, Eos);
 
+	    console.log('id before', scatter.identity);
+	    scatter.forgetIdentity().then(function(){
+	        scatter.getIdentity({accounts:[network]}).then(function(id){
+	            const account = id.accounts.find(function(x){ return x.blockchain === 'eos' });
+	            console.log('acc', account);
+	            eos.transfer(account.name, 'wayungmihoko', '0.0001 EOS', '').then(function(res){
+	                console.log('res', res);
+	            }).catch(function(err){
+	                console.log('err', err);
+	            })
+	        })
+	    })
+    }).catch(function(x){
+        console.log('x', x);
+    });
 
-    var eos = scatter.eos(network, Eos);
-
-    console.log('id before', scatter.identity);
-    scatter.forgetIdentity().then(function(){
-        scatter.getIdentity({accounts:[network]}).then(function(id){
-            const account = id.accounts.find(function(x){ return x.blockchain === 'eos' });
-            console.log('acc', account);
-            eos.transfer(account.name, 'wayungmihoko', '0.0001 EOS', '').then(function(res){
-                console.log('res', res);
-            }).catch(function(err){
-                console.log('err', err);
-            })
-        })
-    })
 		
 	if(tp.isConnected() == true)
 	{
