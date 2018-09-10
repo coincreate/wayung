@@ -12,34 +12,6 @@ function Main() {
 
 	EosjsInit();
 
-	scatter.connect("TestPage").then(function (connected) {
-		console.log('connected', connected);
-		var network = {
-			blockchain: 'eos',
-			protocol: 'https',
-			host: 'mainnet.eoscannon.io',
-			port: 443,
-			chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-		};
-
-		var eos = scatter.eos(network, Eos);
-
-		console.log('id before', scatter.identity);
-		scatter.forgetIdentity().then(function () {
-			scatter.getIdentity({
-				accounts: [network]
-			}).then(function (id) {
-				const account = id.accounts.find(function (x) {
-					return x.blockchain === 'eos'
-				});
-				console.log('acc', account);
-			})
-		})
-	}).catch(function (x) {
-		console.log('x', x);
-	});
-
-
 	if (tp.isConnected() == true) {
 		tp.getWalletList('eos').then(data => {
 			var accountcnt = data["wallets"]["eos"].length;
