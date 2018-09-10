@@ -3,6 +3,7 @@ var g_curtable = '';
 var g_curaction = '';
 var g_eos = '';
 var g_abidata = '';
+
 function Main() {
 	$("#tableid").hide();
 	$("#actionid").hide();
@@ -13,14 +14,24 @@ function Main() {
 
 	scatter.connect("TestPage").then(function (connected) {
 		console.log('connected', connected);
-		var network = { blockchain: 'eos', protocol: 'https', host: 'mainnet.eoscannon.io', port: 443, chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' };
+		var network = {
+			blockchain: 'eos',
+			protocol: 'https',
+			host: 'mainnet.eoscannon.io',
+			port: 443,
+			chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+		};
 
 		var eos = scatter.eos(network, Eos);
 
 		console.log('id before', scatter.identity);
 		scatter.forgetIdentity().then(function () {
-			scatter.getIdentity({ accounts: [network] }).then(function (id) {
-				const account = id.accounts.find(function (x) { return x.blockchain === 'eos' });
+			scatter.getIdentity({
+				accounts: [network]
+			}).then(function (id) {
+				const account = id.accounts.find(function (x) {
+					return x.blockchain === 'eos'
+				});
 				console.log('acc', account);
 			})
 		})
@@ -42,8 +53,7 @@ function Main() {
 				}
 			}
 		})
-	}
-	else {
+	} else {
 		console.log("tp is not connected!");
 	}
 }
@@ -96,8 +106,7 @@ function OperateShow(type) {
 	if (type == 0) {
 		$("#tableid").hide();
 		$("#actionid").show();
-	}
-	else if (type == 1) {
+	} else if (type == 1) {
 		$("#tableid").show();
 		$("#actionid").hide();
 	}
@@ -130,20 +139,17 @@ function OperateSubmit() {
 				var result = JSON.stringify(JSON.parse(JSON.stringify(data)), null, 2);
 				$('#logid').html(result);
 			});
-		}
-		catch (e) {
+		} catch (e) {
 			$("#logid").html(e);
 			console.log(e);
 		}
-	}
-	else if (type == 1) {
+	} else if (type == 1) {
 		var scope = $("#scopeid").val();
 		var table = $("#tablelistid").val();
 		g_eos.getTableRows(true, contract, scope, table, function (error, data) {
 			if (error == null) {
 				$("#logid").html(JSON.stringify(data, null, 2));
-			}
-			else {
+			} else {
 				$("#logid").html(error);
 				console.log(error);
 			}
@@ -163,12 +169,10 @@ function pusheosshishicaiaddlink() {
 				//$('.consoleLog').html(result);
 			});
 
-		}
-		catch (e) {
+		} catch (e) {
 			//$('.consoleLog').html(e);
 		}
-	}
-	else {
+	} else {
 		console.log("tp is not connected!");
 
 	}
@@ -215,8 +219,7 @@ function GetAbi() {
 			OperateShow($("#operatetypeid").val());
 
 			ActionParamParse($actionlistid.val());
-		}
-		else {
+		} else {
 			$("#logid").html(error);
 			console.log(error);
 		}
