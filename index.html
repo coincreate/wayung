@@ -8,34 +8,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scale=no">
 	<title>合约交互工具</title>
 	<link rel="shortcut icon" href="favicon.ico">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap4.min.css" rel="stylesheet">
     <script src="js/jquery_2.1.0.min.js"></script>
     <script src="js/include.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap4.min.js"></script>
 	<script src="js/tp.js"></script>
 	<script src="js/eos.min.js"></script>
+	<script src="js/scatter.min.js"></script>
+	<style type="text/css">  
+		label{
+		width:100%;
+		float:left;
+		line-height:30px;
+		}
+		select{
+		width:100%;
+		float:left; 
+		height:30px; 
+		line-height:30px;
+		}
+		input{
+		width:100%;
+		float:left; 
+		height:30px; 
+		line-height:30px;
+		}
+		
+    </style>
 </head>
 <body onload="Main()">
-<div>
-	<select style="width:200px;" id="accountlistid" onchange="WalletChange(this)">
-	</select>
-</div>
-<div style="margin:100px auto;text-align:center;vertical-align:middle;">
-    <div>
-	<input style="width:200px;" id="contractid" placeholder="请输入合约名" onchange="GetAbi()"></input>
+<div class="container">
+	<div class="row justify-content-center" style="margin:20px auto;">
+		<div class="col-3">
+		<label class="text-right">钱包</label>
+		</div>
+		<div class="col-8">
+		<select id="accountlistid" onchange="WalletChange(this)"></select>
+		</div>
 	</div>
-	<div>
-	<select style="width:200px;" id="tablelistid" onchange="TableChange(this)"></select>
+	<div class="row justify-content-center" style="margin:20px auto;display:none;">
+		<div class="col-3">
+		<label class="text-right">节点</label>
+		</div>
+		<div class="col-8">
+		<input id="httpendpointid" onchange="HttpEndPointChange(this)"></input>
+		</div>
 	</div>
-	<div>
-	<select style="width:200px;" id="actionlistid" onchange="ActionChange(this)"></select>
+	<div class="row justify-content-center" style="margin:20px auto;">
+		<div class="col-3">
+		<label class="text-right">合约</label>
+		</div>
+		<div class="col-8">
+		<input id="contractid" placeholder="请输入合约名" onchange="GetAbi()"></input>
+		</div>
 	</div>
-	<div>
-	<button style="width:200px;margin:50px auto;">提交1</button>
+	<div class="row justify-content-center" style="margin:20px auto;">
+		<div class="col-3">
+		<label class="text-right">操作</label>
+		</div>
+		<div class="col-8">
+		<select id="operatetypeid" onchange="OperateChange(this)"></select>
+		</div>
 	</div>
-	<div>
-	<textarea style="width:100%;height:200px" id="logid">
-	</textarea>
+	<div id="tableid" style="display:none;">
+		<div class="row justify-content-center" style="margin:20px auto;">
+			<div class="col-3">
+			<label class="text-right">tables</label>
+			</div>
+			<div class="col-8">
+			<select id="tablelistid" onchange="TableChange(this)"></select>
+			</div>
+		</div>
+		<div class="row justify-content-center" style="margin:20px auto;">
+			<div class="col-3">
+			<label class="text-right">scope</label>
+			</div>
+			<div class="col-8">
+			<input id="scopeid"></input>
+			</div>
+		</div>
+	</div>
+	<div id="actionid" style="display:none;">
+		<div class="row justify-content-center" style="margin:20px auto;">
+			<div class="col-3">
+			<label class="text-right">actions</label>
+			</div>
+			<div class="col-8">
+			<select id="actionlistid" onchange="ActionChange(this)"></select>
+			</div>
+		</div>
+		<div id="actionparamlistid">
+		</div>
+	</div>
+	<div class="row justify-content-center" style="margin:20px auto;">
+		<div class="col-3">
+		</div>
+		<div class="col-8">
+		<button type="button" class="btn btn-primary" onclick="OperateSubmit()">提交</button>
+		</div>
+	</div>
+	<div class="row justify-content-center" style="margin:20px auto;">
+		<div class="col-12">
+		<textarea  id="logid" style="width:100%;height:200px"></textarea>
+		</div>
 	</div>
 </div>
 </body>
